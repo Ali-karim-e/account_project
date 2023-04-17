@@ -1,5 +1,4 @@
 from django import forms
-from django.contrib.auth.models import User
 from django.core.exceptions import ValidationError
 from .models import Account
 
@@ -12,23 +11,23 @@ class UserRegistrationForm(forms.Form):
 
     def clean_email(self):
         email = self.cleaned_data['email'].lower()
-        user = User.objects.filter(email=email).exists()
+        user = Account.objects.filter(email=email).exists()
         if user:
             raise ValidationError('This email already exists!!')
         return email
 
     def clean_username(self):
         username = self.cleaned_data['username']
-        user = User.objects.filter(username=username).exists()
+        user = Account.objects.filter(username=username).exists()
         if user:
             raise ValidationError(' This user already exists!!')
         return username
 
     def clean(self):
         cd = super().clean()
-        p1 = cd.get('password1')
-        p2 = cd.get('password2')
-        if p1 and p2 and p1 != p2:
+        password1 = cd.get('password1')
+        password2 = cd.get('password2')
+        if password1 and password2 and password1 != password2:
             raise ValidationError('password must match')
 
 class UserLoginForm(forms.Form):

@@ -1,5 +1,5 @@
 from django.db import models
-from django.contrib.auth.models import AbstractBaseUser,BaseUserManager
+from django.contrib.auth.models import BaseUserManager, AbstractUser
 
 
 class MyAccountManager(BaseUserManager):
@@ -38,7 +38,7 @@ def get_default_profile_image():
     return 'profile/profile_default/default_profile_image.png'
 
 
-class Account(AbstractBaseUser):
+class Account(AbstractUser):
     email = models.EmailField(max_length=60, unique=True)
     username = models.CharField(max_length=30, unique=True)
     date_joined = models.DateTimeField(auto_now_add=True)

@@ -5,6 +5,7 @@
 
   <form action="" method="post" class="col-md-4" novalidate>
     {% csrf_token %}
+    <img class="img-account-profile rounded-circle mb-2" src="{{ user.profile_image }}" alt="">
     {{ form.as_p }}
     <input type="submit" value="Register">
   </form>

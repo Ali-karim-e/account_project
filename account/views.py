@@ -6,7 +6,6 @@ from django.contrib.auth import authenticate, login, logout
 from django.contrib.auth.mixins import LoginRequiredMixin
 from .models import Account
 from django.conf import settings
-from django.contrib.auth import get_user_model
 
 
 class UserRegisterView(View):
@@ -27,12 +26,12 @@ class UserRegisterView(View):
         form = self.form_class(request.POST)
         if form.is_valid():
             cd = form.cleaned_data
-            account = Account(username=cd['username'], email=cd['email'], password=cd['password1'])
+            account = Account.objects.create_user(username=cd['username'], email=cd['email'])
+            account.set_password(cd['password1'])
             account.save()
             messages.success(request, 'You register successfully', 'success')
             return redirect('home:home')
         return render(request, self.template_name, {'form': form})
-
 
 class UserLoginView(View):
     form_class = UserLoginForm
@@ -58,6 +57,7 @@ class UserLoginView(View):
                 messages.success(request, 'You logged in successfully ', 'success')
                 return redirect('home:home')
             messages.error(request, 'username or password is wrong', 'warning')
+            return render(request, self.template_name, {'form': form})
         return render(request, self.template_name, {'form': form})
 
 
@@ -66,7 +66,6 @@ class UserLogoutView(LoginRequiredMixin, View):
         logout(request)
         messages.success(request, 'You logged out successfully ', 'success')
         return redirect('home:home')
-
 
 class UserProfileView(LoginRequiredMixin, View):
     form_class = UserProfileForm
@@ -92,9 +91,7 @@ class UserProfileView(LoginRequiredMixin, View):
         form = self.form_class(request.POST, request.FILES, instance=request.user)
         if form.is_valid():
             form.save()
-            print('fuck')
             messages.success(request, 'Edit profile is successfully', 'success')
-            #return redirect('account:profile', user_id=account.pk)
             return redirect('home:home')
         else:
             form = self.form_class(request.POST, instance=request.user,
