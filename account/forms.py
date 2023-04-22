@@ -40,25 +40,12 @@ class UserProfileForm(forms.ModelForm):
 
     class Meta:
         model = Account
-        fields = ('username', 'email', 'profile_image', 'bio')
+        fields = ('first_name', 'last_name', 'profile_image', 'bio')
 
-    def clean_email(self):
-        email = self.cleaned_data['email'].lower()
-        account = Account.objects.filter(email=email).exists()
-        if account:
-            raise ValidationError('This email already exists!!')
-        return email
-
-    def clean_username(self):
-        username = self.cleaned_data['username']
-        account = Account.objects.filter(username=username).exists()
-        if account:
-            raise ValidationError('This username already exists!!')
-        return username
     def save(self, commit=True):
         account = super(UserProfileForm, self).save(commit=False)
-        account.username = self.cleaned_data['username']
-        account.email = self.cleaned_data['email'].lower()
+        account.first_name = self.cleaned_data['first_name']
+        account.last_name = self.cleaned_data['last_name']
         account.profile_image = self.cleaned_data['profile_image']
         if commit:
             account.save()

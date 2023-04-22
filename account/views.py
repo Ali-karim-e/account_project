@@ -76,8 +76,9 @@ class UserProfileView(LoginRequiredMixin, View):
         form = self.form_class(
             initial={
                 'id': account.id,
-                'email': account.email,
-                'username': account.username,
+                'first_name': account.first_name,
+                'last_name': account.last_name,
+                'bio':account.bio,
                 'profile_image': account.profile_image
             }
         )
@@ -97,8 +98,9 @@ class UserProfileView(LoginRequiredMixin, View):
             form = self.form_class(request.POST, instance=request.user,
                                    initial={
                                        'id': account.id,
-                                       'email': account.email,
-                                       'username': account.username,
+                                       'first_name': account.first_name,
+                                       'last_name': account.last_name,
+                                       'bio':account.bio,
                                        'profile_image': account.profile_image
                                    }
                                    )
