@@ -42,3 +42,5 @@ apps/karinja/extra/*
 db.sqlite3
 
 data/*
+
+__pycache__
