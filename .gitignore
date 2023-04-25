@@ -1,0 +1,44 @@
+.idea
+*~
+\#*#
+\.#*
+\#*\#
+scripts/contact*
+celerybeat*
+.deliver/releases/
+/*.log
+*.retry
+postgres-data/
+*.pyc
+
+# Distribution / packaging
+.python-version
+env/
+venv/
+
+# reload file
+reload
+
+# media files
+media/
+
+# static folders
+static/admin
+static/ckeditor
+static/rest_framework
+
+# coverage
+.coverage
+
+# karinja exctra
+apps/karinja/extra/*
+!apps/karinja/extra/ttms.mdb
+
+# Pycharm
+.idea/
+
+# Database stuff
+*.sqlite3
+db.sqlite3
+
+data/*
