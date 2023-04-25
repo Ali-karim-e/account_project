@@ -1,4 +1,5 @@
 {% extends 'base.html' %}
+{% load static %}
 
 {% block content %}
 {% load static %}
@@ -9,11 +10,11 @@
 </div>
 
     <div class="card-body text-center">
-        <form action="" method="post" class="col-md-4" novalidate>
+        <form action="" method="post" class="col-md-4" novalidate enctype="multipart/form-data">
           {% csrf_token %}
           <img
              class="img-account-profile rounded-circle mb-2"
-             src="{{ user.profile_image.url }}"
+             src="{% static user.profile_image %}"
              alt=""
              width="250"
              height="300">
