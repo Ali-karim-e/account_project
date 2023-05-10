@@ -15,7 +15,7 @@ class UserRegisterView(View):
     def dispatch(self, request, *args, **kwargs):
         if request.user.is_authenticated:
             messages.warning(request, '!!you logged in syte!!')
-            return redirect('home:home')
+            return redirect('todos:todos')
         return super().dispatch(request, *args, **kwargs)
 
     def get(self, request):
@@ -30,7 +30,7 @@ class UserRegisterView(View):
             account.set_password(cd['password1'])
             account.save()
             messages.success(request, 'You register successfully', 'success')
-            return redirect('home:home')
+            return redirect('todos:todos')
         return render(request, self.template_name, {'form': form})
 
 class UserLoginView(View):
@@ -40,7 +40,7 @@ class UserLoginView(View):
     def dispatch(self, request, *args, **kwargs):
         if request.user.is_authenticated:
             messages.warning(request, '!!you logged in syte!!')
-            return redirect('home:home')
+            return redirect('todos:todos')
         return super().dispatch(request, *args, **kwargs)
 
     def get(self, request):
@@ -55,7 +55,7 @@ class UserLoginView(View):
             if user is not None:
                 login(request, user)
                 messages.success(request, 'You logged in successfully ', 'success')
-                return redirect('home:home')
+                return redirect('todos:todos')
             messages.error(request, 'username or password is wrong', 'warning')
             return render(request, self.template_name, {'form': form})
         return render(request, self.template_name, {'form': form})
@@ -65,7 +65,7 @@ class UserLogoutView(LoginRequiredMixin, View):
     def get(self, request):
         logout(request)
         messages.success(request, 'You logged out successfully ', 'success')
-        return redirect('home:home')
+        return redirect('todos:todos')
 
 class UserProfileView(LoginRequiredMixin, View):
     form_class = UserProfileForm
@@ -93,7 +93,7 @@ class UserProfileView(LoginRequiredMixin, View):
         if form.is_valid():
             form.save()
             messages.success(request, 'Edit profile is successfully', 'success')
-            return redirect('home:home')
+            return redirect('todos:todos')
         else:
             form = self.form_class(request.POST, instance=request.user,
                                    initial={

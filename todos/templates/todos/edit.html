@@ -1,0 +1,36 @@
+{% extends 'base.html' %}
+{% load static %}
+
+{% block content %}
+<style>
+.myDiv {
+  border: 5px outset dimgray;
+  background-color: lavender;
+  text-align: center;
+}
+</style>
+
+<div class="card-body text-center">
+  <form action="" method="post" class="col-md-4" novalidate enctype="multipart/form-data">
+    {% csrf_token %}
+    <div class="card-body text-left">
+      <h2>Todo</h2>
+    </div>
+    <div class="myDiv">
+      <h2> {{ todos.title }} </h2>
+      <h4>{{ todos.desc }}</h4>
+      <p>{{ todos.createdate }}</p>
+    </div>
+      {{ form.as_p }}
+      <p> {{ todos.donedate }} </p>
+    <a href="{% static todos.attachment %}" download>
+      <b class="button">Attachment</b>
+    </a>
+    <div class="card-body text-center">
+      <input type="submit" value="Edit">
+    </div>
+  </form>
+</div>
+
+
+{% endblock %}

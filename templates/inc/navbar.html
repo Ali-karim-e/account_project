@@ -1,8 +1,14 @@
 <nav class="navbar navbar-expand-lg navbar-dark bg-dark">
   <div class="container-fluid">
     <div class="navbar-nav">
-      <a class="nav-link active"  href="{% url 'home:home' %}">Home</a>
+      <a class="nav-link active"  href="{% url 'todos:todos' %}">Home</a>
       {% if request.user.is_authenticated %}
+        {%  if request.user.is_staff %}
+          <a class="nav-link active"  href=" admin/ ">Admin Panel</a>
+        {% endif %}
+        {% if request.user.is_admin %}
+          <a class="nav-link active"  href="{% url 'todos:todo_create' %}">Create Todo</a>
+        {% endif %}
         <a class="nav-link active"  href="{% url 'account:user_logout' %}">Logout</a>
         <a class="nav-link active"  href="{% url 'account:user_profile' user.id %}">{{user}}</a>
       {% else %}
